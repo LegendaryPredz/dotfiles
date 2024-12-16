@@ -105,11 +105,10 @@
     };
   in
   {
-    # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#simple
     darwinConfigurations."Orions-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
       modules = [ 
-        configuration
+      	configuration
         home-manager.darwinModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
@@ -117,6 +116,8 @@
         }
       ];
     };
+
+    # Expose the package set, including overlays, for convenience.
     darwinPackages = self.darwinConfigurations."Orions-MacBook-Pro".pkgs;
   };
 }
